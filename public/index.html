@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Touse vs Bouse</title>
+  <link rel="stylesheet" href="/public/style.css?v=3" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="uf-badge">
+    <svg class="uf-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="50" fill="#003087"/>
+      <text x="50" y="68" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="52" fill="#FA4616">F</text>
+    </svg>
+    <span class="uf-label">GR33K</span>
+  </div>
+  <main class="wrap">
+    <header class="header">
+      <div class="title">Touse or Bouse?</div>
+      <div class="subtitle">Post some face, no nudity (dih's)</div>
+    </header>
+
+     <section class="card" id="vote-card">
+          <div class="image-frame">
+            <img id="photo" alt="Uploaded person" />
+            <div class="photo-affiliation" id="photo-affiliation"></div>
+            <div class="name-tag" id="name-tag"></div>
+            <div class="empty" id="empty-state">
+              <div class="empty-title">No uploads yet</div>
+              <div class="empty-subtitle">Be the first to add a face to judge.</div>
+            </div>
+          </div>
+      </section>
+
+      <div class="controls">
+        <button class="btn touse" id="touse-btn">touse</button>
+        <button class="btn bouse" id="bouse-btn">bouse</button>
+      </div>
+
+      <div class="my-vote" id="my-vote">Your vote: —</div>
+      <div class="vote-result" id="vote-result" style="display:none">
+        <div class="vote-bar">
+          <div class="vote-bar-touse" id="vote-bar-touse"></div>
+        </div>
+        <div class="vote-counts" id="vote-counts"></div>
+      </div>
+
+      <section class="comments-section">
+        <div class="comments-header">
+          <div class="comments-title">Comments</div>
+          <span class="comments-count" id="comments-count"></span>
+        </div>
+        <div class="comments-list" id="comments-list"></div>
+        <form class="comment-form" id="comment-form">
+          <input class="comment-input" id="comment-input" type="text"
+            placeholder="Add a comment..." maxlength="200" autocomplete="off" />
+          <button class="btn comment-btn" type="submit">Post</button>
+        </form>
+        <div class="comment-note" id="comment-note"></div>
+      </section>
+
+    <section class="upload">
+      <div class="upload-title">Upload a person</div>
+      <div class="upload-helper">One person per image.</div>
+      <form id="upload-form" enctype="multipart/form-data">
+        <input class="name" type="text" name="name" placeholder="Person's name" required />
+        <select class="affiliation-select" id="affiliation-select" name="affiliation">
+          <option value="">Affiliation</option>
+          <optgroup label="UF">
+            <option value="UF GR33K">UF GR33K</option>
+            <option value="OX">OX</option>
+            <option value="ATO">ATO</option>
+            <option value="BETA">BETA</option>
+          </optgroup>
+          <optgroup label="General">
+            <option value="GREEK">GREEK</option>
+            <option value="GEED">GEED 😂</option>
+          </optgroup>
+        </select>
+        <div class="drop-zone" id="drop-zone">
+          <span class="drop-zone-text">Drop image here or <span class="drop-zone-link">browse</span></span>
+          <div class="drop-zone-preview" id="drop-zone-preview" style="display:none">
+            <img id="drop-zone-img" alt="preview" />
+            <button type="button" class="drop-zone-clear" id="drop-zone-clear">✕</button>
+          </div>
+        </div>
+        <input type="file" id="file-input" accept="image/*" style="display:none" />
+        <button class="btn upload-btn" type="submit">upload</button>
+        <span class="upload-note" id="upload-note"></span>
+      </form>
+    </section>
+
+    <div class="crop-modal" id="crop-modal" style="display:none">
+      <div class="crop-modal-inner">
+        <div class="crop-modal-title">Crop your image</div>
+        <div class="crop-container">
+          <img id="crop-img" alt="crop" />
+        </div>
+        <div class="crop-modal-actions">
+          <button type="button" class="btn ghost" id="crop-cancel">Cancel</button>
+          <button type="button" class="btn upload-btn" id="crop-confirm">Use this crop</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="search-section">
+      <div class="search-wrap">
+        <input class="search-input" id="search-input" type="text" placeholder="Search for a person..." autocomplete="off" />
+        <div class="search-results" id="search-results" style="display:none"></div>
+      </div>
+    </section>
+
+    <section class="leaderboard">
+      <div class="leaderboard-header">
+        <div class="leaderboard-title">Leaderboard</div>
+        <select class="lb-affil-filter" id="lb-affil-filter">
+          <option value="">All</option>
+          <optgroup label="UF">
+            <option value="UF GR33K">UF GR33K</option>
+            <option value="OX">OX</option>
+            <option value="ATO">ATO</option>
+            <option value="BETA">BETA</option>
+          </optgroup>
+          <optgroup label="General">
+            <option value="GREEK">GREEK</option>
+            <option value="GEED">GEED 😂</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="lb-tabs">
+        <button class="lb-tab active" data-tab="overall">Overall</button>
+        <button class="lb-tab tousers" data-tab="tousers">Top Tousers</button>
+        <button class="lb-tab bousers" data-tab="bousers">Top Bousers</button>
+      </div>
+      <div class="board" id="lb-overall"></div>
+      <div class="board" id="lb-tousers" style="display:none"></div>
+      <div class="board" id="lb-bousers" style="display:none"></div>
+      <button class="btn ghost" id="leaderboard-toggle" type="button">Show top 100</button>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+  <script src="https://unpkg.com/nsfwjs@4.3.0/dist/browser/nsfwjs.min.js"></script>
+  <script src="/public/app.js?v=20"></script>
+</body>
+</html>
